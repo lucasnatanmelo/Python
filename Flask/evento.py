@@ -21,12 +21,8 @@ class Evento:
         print(f"Local do evento: {self.local}")
         print("-----------------------------")
 
-    def to_json(self):
-        return json.dumps({
-            "id": self.id,
-            "local": self.local,
-            "nome": self.nome
-        })
+    def toJSON(self):
+        return json.dumps(self.__dict__)
 
     @classmethod
     def cria_evento_online(cls, nome):
