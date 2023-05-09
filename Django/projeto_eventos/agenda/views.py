@@ -6,21 +6,28 @@ from agenda.models import eventos
 
 # Create your views here.
 
+
 def index(request):
     return HttpResponse("Olá mundo!")
 
+
 def exibir_evento(request):
-    evento = eventos[0]
+    # evento = eventos[0]
+    evento = {
+        "nome": "Teste",
+        "categoria": "categoria A",
+        "local": "Manaus"
+    }
     # template = loader.get_template("agenda/exibir_evento.html")
     # rendered_template = template.render(
-    #       context={"evento": evento}, 
+    #       context={"evento": evento},
     #       request=request
     #     )
     # return HttpResponse(rendered_template)
 
     return render(
-        request=request, 
-        context={"evento": evento}, 
+        request=request,
+        context={"evento": evento},
         template_name="agenda/exibir_evento.html"
-      )
+    )
 # Obs: Incluir em vamomarcar -> settings.py -> INSTALLED_APPS: 'agenda.apps.AgendaConfig'

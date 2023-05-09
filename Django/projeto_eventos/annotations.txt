@@ -19,3 +19,5 @@ Executar servidor:
 
 Criar app:
   django-admin startapp agenda
+
+ORM -> Object Relational Mapping
