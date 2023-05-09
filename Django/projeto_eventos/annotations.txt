@@ -2,7 +2,7 @@ Criar ambiente virtual:
   python -m venv venv
 
 Executar ambiente virtual:
-  venv/bin/activate
+  Django/venv/bin/activate
 
 Selecionar compilador do ambiente vitual:
   ctrl + shift + p
@@ -21,3 +21,24 @@ Criar app:
   django-admin startapp agenda
 
 ORM -> Object Relational Mapping
+
+Para realizar as migrações no banco de dados (Sempre que realizar uma mudança no DB - models):
+  python manage.py makemigrations
+
+Para realizar as operações após as migrações no banco de dados:
+  python manage.py migrate
+
+Para realizar consultas no banco de dados interno - sqlite
+  python manage.py dbshell
+
+* Necessário instalar o sqlite
+
+Para realizar consultas no banco de dados ORM 
+  python manage.py shell
+
+Para criação do usuário - admnin:
+  python manage.py createsuperuser
+
+username: lucas.melo
+email: lucasnatan.dev@gmail.com
+senha: fpf_diebold092
