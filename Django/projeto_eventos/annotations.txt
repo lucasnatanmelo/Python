@@ -1,0 +1,21 @@
+Criar ambiente virtual:
+  python -m venv venv
+
+Executar ambiente virtual:
+  venv/bin/activate
+
+Selecionar compilador do ambiente vitual:
+  ctrl + shift + p
+  Selecionar compilador atrelado ao venv
+
+Instalar o Django:
+  pip install Django==4.2.1
+
+Criar projeto:
+  django-admin startproject vamomarcar .
+
+Executar servidor:
+  python manage.py runserver
+
+Criar app:
+  django-admin startapp agenda
