@@ -23,27 +23,15 @@
             </tr>
         </thead>
         <tbody>
+            {% for evento in eventos %}
             <tr>
-                <td>Aula de Python</td>
-                <td>Backend</td>
-                <td>Rio de Janeiro</td>
-                <td>22/04/2022</td>
-                <td><a href="exibir_evento.html">Ver detalhes</a></td>
+                <td>{{ evento.nome }}</td>
+                <td>{{ evento.categoria.nome }}</td>
+                <td>{% firstof evento.link evento.local %}</td>
+                <td>{% if evento.data %}{{ evento.data | date:"d/m/Y" }}{% else %}A definir.{% endif %}</td>
+                <td><a href="{% url 'exibir_evento' evento.id %}">Ver detalhes</a></td>
             </tr>
-            <tr>
-                <td>Aula de React</td>
-                <td>Frontend</td>
-                <td>http://tamarcado.com/acessar/2/</td>
-                <td>12/06/2022</td>
-                <td><a href="exibir_evento.html">Ver detalhes</a></td>
-            </tr>
-            <tr>
-                <td>Aula de PHP</td>
-                <td>Backend</td>
-                <td>http://tamarcado.com/acessar/2/</td>
-                <td>A definir.</td>
-                <td><a href="exibir_evento.html">Ver detalhes</a></td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 <html>

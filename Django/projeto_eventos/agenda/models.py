@@ -25,3 +25,4 @@ class Evento(models.Model):
     local = models.CharField(max_length=256, blank=True)
     link = models.CharField(max_length=256, blank=True)
     data = models.DateField(null=True)
+    participantes = models.IntegerField(default=0)
