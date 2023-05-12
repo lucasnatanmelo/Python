@@ -1,0 +1,35 @@
+Criar ambiente virtual:
+	python -m venv venv
+Ativar ambiente virtual:
+	executar -> venv/scripts/activate
+Instalar Django:
+	pip install Django
+Instalar Django Rest Framework:
+	pip install djangorestframework
+
+Criar projeto
+	django-admin startproject tamarcado .
+
+Selecionar interpretador Python:
+	ctrl + shift + p -> selecionar interpretador da env
+
+Criar outro projeto:
+	django-admin startapp agenda
+
+A criterio:
+	Criar arquivo gitignore e adicionar:
+		venv
+
+Após criação das entidades em models.py, criar migrações:
+	 python manage.py makemigrations
+
+Na pasta tamarcado -> settings.py -> INSTALLED_APPS, incluir 'agenda'
+
+Executar migrações:
+	 python manage.py migrate
+
+Para rodar o servidor:
+	python manage.py runserver
+
+Para realizar testes e criar novos agendamentos:
+	python manage.py shell
