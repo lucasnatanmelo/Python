@@ -2,7 +2,7 @@ Criar ambiente virtual:
   python -m venv venv
 
 Executar ambiente virtual:
-  Django/venv/bin/activate
+  Django\projeto_eventos\venv\Scripts\activate
 
 Selecionar compilador do ambiente vitual:
   ctrl + shift + p

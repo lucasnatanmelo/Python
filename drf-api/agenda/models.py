@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Agendamento(models.Model):
+    # prestador will be the admin user of the application
     prestador = models.ForeignKey('auth.User', related_name="agendamentos", on_delete=models.CASCADE)
 
     data_horario = models.DateTimeField()

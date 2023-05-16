@@ -6,9 +6,58 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework import permissions
+from django.contrib.auth.models import User
 
 from agenda.models import Agendamento
-from agenda.serializers import AgendamentoSerializer
+from agenda.serializers import AgendamentoSerializer, PrestadorSerializer
+from agenda.utils import get_horarios_disponiveis
+
+"""
+- Qualquer cliente (autenticado ou não) seja capaz de criar um agendamento.
+- Apenas o prestador de serviço pode vizualizar todos os agendamentos em sua agenda.
+- Apendas o prestador de serviço pode manipular os seus agendamentos
+"""
+
+class IsOwnerOrCreateOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method == "POST":
+            return True
+        username = request.query_params.get("username", None)
+        if request.user.username == username:
+            return True
+        return False
+
+class IsPrestador(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if obj.prestador == request.user:
+            return True
+        return False
+
+# FIFTY METHOD - Using generics - using username as key
+class AgendamentoList(generics.ListCreateAPIView):  # /api/agendamentos/?username=lucas.melo
+    serializer_class = AgendamentoSerializer
+    # implements authentication -> only the related user 
+    permission_classes = [IsOwnerOrCreateOnly]
+
+    def get_queryset(self):
+        username = self.request.query_params.get("username", None)
+        queryset = Agendamento.objects.filter(prestador__username = username) # fix it to receive a str, not a integer
+        return queryset 
+
+# FOURTH METHOD - Using generics
+class AgendamentoDetail(generics.RetrieveUpdateDestroyAPIView): # /api/agendamentos/<pk>/
+
+    permission_classes = [IsPrestador]
+    queryset = Agendamento.objects.all()
+    serializer_class = AgendamentoSerializer
+
+class PrestadorList(generics.ListAPIView):  # /api/agendamentos/prestadores
+
+    # Implements super user authentication here
+
+    serializer_class = PrestadorSerializer
+    queryset = User.objects.all()
 
 # Create your views here.
 
@@ -67,15 +116,6 @@ from agenda.serializers import AgendamentoSerializer
 # class AgendamentoList(generics.ListCreateAPIView):  # /api/agendamentos/
 #     queryset = Agendamento.objects.all()
 #     serializer_class = AgendamentoSerializer
-
-# FIFTY METHOD - Using generics - using username as key
-class AgendamentoList(generics.ListCreateAPIView):  # /api/agendamentos/?username=lucas.melo
-    serializer_class = AgendamentoSerializer
-
-    def get_queryset(self):
-        username = self.request.query_params.get("username", None)
-        queryset = Agendamento.objects.filter(prestador__username = username)
-        return queryset
 
 # ----------------------------------------------------------------------------------------
 
@@ -160,20 +200,15 @@ class AgendamentoList(generics.ListCreateAPIView):  # /api/agendamentos/?usernam
 #     def delete(self, request, *args, **kwargs):
 #         return self.destroy(request, *args, **kwargs)
 
-# FOURTH METHOD - Using generics
-class AgendamentoDetail(generics.RetrieveUpdateDestroyAPIView): # /api/agendamentos/<pk>/
-    queryset = Agendamento.objects.all()
-    serializer_class = AgendamentoSerializer
-
 # Finish it later
 
-# @api_view(http_method_names=["GET"])
-# def get_horarios(request):
-#     data = request.query_params.get("data")
-#     if not data:
-#         data = datetime.now().date()
-#     else:
-#         data = datetime.fromisoformat(data).date()
+@api_view(http_method_names=["GET"])
+def get_horarios(request):
+    data = request.query_params.get("data")
+    if not data:
+        data = datetime.now().date()
+    else:
+        data = datetime.fromisoformat(data).date()
 
-#     horarios_disponiveis = sorted(list(get_horarios_disponiveis(data)))
-#     return JsonResponse(horarios_disponiveis, safe=False)
+    horarios_disponiveis = sorted(list(get_horarios_disponiveis(data)))
+    return JsonResponse(horarios_disponiveis, safe=False)
