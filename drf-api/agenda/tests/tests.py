@@ -63,4 +63,17 @@ class TestCriacaoAgendamento(APITestCase):
 
   def test_quando_request_e_invalido_retorna_400(self):
     ...
-  
+
+from unittest import mock  
+class TestGetHorarios(APITestCase):
+  @mock.patch("agenda.libs.brasil_api.is_feriado", return_value=True)
+  def test_quando_data_e_feriado_retorna_lista_vazia(self, _):
+    response = self.client.get("/api/horarios/?data=2022-12-25")
+    self.assertEqual(response.data, [])
+
+  @mock.patch("agenda.libs.brasil_api.is_feriado", return_value=False)
+  def test_quando_data_e_dia_comum_retorna_lista_com_horarios(self, _):
+    response = self.client.get("api/horarios/?data=2022-12-20")
+    self.assertNotEqual(response.data, [])
+    self.assertEqual(response.data[0], datetime(2022, 10, 3, 9, tzinfo = timezone.utc))
+    self.assertEqual(response.data[-1], datetime(2022, 10, 17, 30, tzinfo = timezone.utc))

@@ -33,3 +33,14 @@ Para rodar o servidor:
 
 Para realizar testes e criar novos agendamentos:
 	python manage.py shell
+
+Para incluir cobertura de testes (test coverage):
+	pip install pytest-cov
+	pip install pytest-django
+
+Criar pasta para centralizar testes, arquivo pytest.ini e colocar configurações
+	A partir disso é possível executar os testes pelo comando pytest
+
+Para criar vários ambientes - (dev e prod):
+	na pasta settings, tranformar o arquivo settings em base.py e sobrescrever definições como feito
+	em manage.py colocar na main() o os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tamarcado.settings.dev')

@@ -3,6 +3,7 @@ from django.utils import timezone
 from rest_framework import serializers
 
 from agenda.models import Agendamento
+from agenda.utils import get_horarios_disponiveis
 
 class AgendamentoSerializer(serializers.ModelSerializer):
 
@@ -24,6 +25,8 @@ class AgendamentoSerializer(serializers.ModelSerializer):
         if value < timezone.now():
             # raise -> Throw Exception
             raise serializers.ValidationError("Agendamento não pode ser feito no passado!")
+        if value not in get_horarios_disponiveis(value.date()):
+            raise serializers.ValidationError("Esse horário não está disponível!")
         return value
 
     def validate(self, attrs):
