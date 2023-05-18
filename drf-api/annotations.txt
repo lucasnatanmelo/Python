@@ -44,3 +44,29 @@ Criar pasta para centralizar testes, arquivo pytest.ini e colocar configuraçõe
 Para criar vários ambientes - (dev e prod):
 	na pasta settings, tranformar o arquivo settings em base.py e sobrescrever definições como feito
 	em manage.py colocar na main() o os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tamarcado.settings.dev')
+
+Para instalar dependencias para ajustar .env:
+	pip install python-dotenv
+
+Para debugar código python
+	breakpoint()
+
+Para criar arquivo com dependencias:
+	criar arquivo requirements.txt
+
+	lista todas as dependencias:
+		pip freeze
+
+	copiar e colar no arquivo requirements.txt
+
+	ou 
+	pip freeze > requirements.txt
+
+Para instalar as dependencias de dev:
+	pip install -r requirements/dev.txt
+
+
+Passos para deploy
+
+Instalar Heroku CLI:
+	https://devcenter.heroku.com/articles/heroku-cli
