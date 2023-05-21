@@ -70,3 +70,14 @@ Passos para deploy
 
 Instalar Heroku CLI:
 	https://devcenter.heroku.com/articles/heroku-cli
+
+
+Observação: 
+	10. Integração COntínua com Github:
+		- Existe um arquivo em tamarcado.settings chamado testing.py
+
+Para o projeto final, assistir novamente aula de CI/CD
+
+Assistir novamente Tarefas assíncronas com Celery18(Caso precise construir aplicações mais complexas)
+
+Caso necessário futuramente, assistir aulas de configuração e conteinerização em Docker

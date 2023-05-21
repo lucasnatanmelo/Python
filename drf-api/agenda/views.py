@@ -1,5 +1,6 @@
-from datetime import datetime
-from django.http import JsonResponse
+import csv
+from datetime import date, datetime
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -58,6 +59,38 @@ class PrestadorList(generics.ListAPIView):  # /api/agendamentos/prestadores
 
     serializer_class = PrestadorSerializer
     queryset = User.objects.all()
+
+# To return CSV Files
+# @api_view(http_method_names=["GET"])
+# @permission_classes([permissions.IsAdminUser])
+# def relatorio_prestadores(request):
+
+#     formato = request.query_params.get("formato")
+#     prestadores = User.objects.all()
+#     serializer = PrestadorSerializer(prestadores, many = True)
+#     if formato == "csv":
+#         data_hoje = date.today()
+#         response = HttpResponse(
+#             content_type = 'text/csv',
+#             headers = {
+#                 'Content-Disposition': f'attachment; filename="relatio_{data_hoje}.csv"'
+#             }
+#         )
+
+#         writer = csv.writer(response)
+#         for prestador in serializer.data:
+#             agendamentos = prestador["agendamentos"]
+#             for agendamento in agendamentos:
+#                 writer.writerow([
+#                     agendamento["prestador"],
+#                     agendamento["nome_cliente"],
+#                     agendamento["email_cliente"],
+#                     agendamento["telefone_cliente"],
+#                     agendamento["data_horario"]
+#                 ])
+#         return response
+#     else: 
+#         return Response(serializer.data)
 
 # Create your views here.
 
